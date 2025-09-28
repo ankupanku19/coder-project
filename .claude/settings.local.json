@@ -14,7 +14,17 @@
       "Bash(dir)",
       "Bash(tasklist)",
       "Bash(git init:*)",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(gh:*)",
+      "Bash(winget install:*)",
+      "Bash(where gh)",
+      "Bash(\"C:\\Program Files\\GitHub CLI\\gh.exe\" --version)",
+      "Bash(\"C:\\Program Files\\GitHub CLI\\gh.exe\" auth status)",
+      "Bash(\"C:\\Program Files\\GitHub CLI\\gh.exe\" auth login)",
+      "Bash(\"C:\\Program Files\\GitHub CLI\\gh.exe\" repo create coder-project --public --description \"Full-stack project with React frontend and Node.js backend\")",
+      "Bash(git remote add:*)",
+      "Bash(git push:*)"
     ],
     "deny": [],
     "ask": []
