@@ -61,7 +61,8 @@ const ProjectView = () => {
 
   const handleDownload = () => {
     if (project) {
-      window.open(`/api/projects/${project.id}/download`, '_blank');
+      const serverUrl = process.env.REACT_APP_SERVER_URL || 'https://coder-project-jar9.onrender.com';
+      window.open(`${serverUrl}/api/projects/${project.id}/download`, '_blank');
     }
   };
 

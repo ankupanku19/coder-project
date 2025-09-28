@@ -496,7 +496,18 @@ const CreateProject = () => {
                   whileTap={{ scale: 0.98 }}
                   onClick={() => {
                     if (currentProject) {
-                      window.open(`/api/projects/${currentProject.id}/download`, '_blank');
+                      try {
+                        const serverUrl = process.env.REACT_APP_SERVER_URL || 'https://coder-project-jar9.onrender.com';
+                        const downloadUrl = `${serverUrl}/api/projects/${currentProject.id}/download`;
+                        console.log('Download URL:', downloadUrl);
+                        window.open(downloadUrl, '_blank');
+                        toast.success('Download started!');
+                      } catch (error) {
+                        console.error('Download error:', error);
+                        toast.error('Failed to start download');
+                      }
+                    } else {
+                      toast.error('No project available for download');
                     }
                   }}
                   className="btn-outline flex items-center justify-center space-x-2 py-4"
