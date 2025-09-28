@@ -318,6 +318,75 @@ class UniversalArchitectureGenerator {
 
     return interactions;
   }
+
+  inferElementType(component) {
+    if (component.includes('button')) return 'interactive button element';
+    if (component.includes('form')) return 'form with proper validation';
+    if (component.includes('input')) return 'input with labels and validation';
+    if (component.includes('modal')) return 'dialog with overlay and close button';
+    if (component.includes('grid')) return 'container for dynamic content';
+    if (component.includes('list')) return 'semantic list for data display';
+    if (component.includes('card')) return 'article element for content display';
+    return 'semantic container element';
+  }
+
+  inferInteractions(component) {
+    if (component.includes('button')) return 'click handlers and keyboard support';
+    if (component.includes('form')) return 'submit handlers and validation';
+    if (component.includes('input')) return 'input events and validation';
+    if (component.includes('modal')) return 'open/close functionality';
+    return 'appropriate event handlers';
+  }
+
+  mapComponents(analysis) {
+    console.log(`🗺️ [DEBUG] Mapping components for ${analysis.appType} application...`);
+
+    const baseComponents = ['header', 'navigation', 'main-content', 'footer'];
+    const featureComponents = this.mapFeaturesToComponents(analysis.features);
+    const appSpecificComponents = this.getAppSpecificComponents(analysis.appType);
+
+    const allComponents = [...baseComponents, ...featureComponents, ...appSpecificComponents];
+    const uniqueComponents = [...new Set(allComponents)];
+
+    console.log(`🗺️ [DEBUG] Component mapping complete:`, {
+      baseComponents: baseComponents.length,
+      featureComponents: featureComponents.length,
+      appSpecificComponents: appSpecificComponents.length,
+      totalUniqueComponents: uniqueComponents.length,
+      componentList: uniqueComponents
+    });
+
+    return {
+      all: uniqueComponents,
+      base: baseComponents,
+      features: featureComponents,
+      appSpecific: appSpecificComponents,
+      interactions: this.mapComponentInteractions(uniqueComponents)
+    };
+  }
+
+  getAppSpecificComponents(appType) {
+    const componentMap = {
+      'dashboard': ['sidebar', 'widget-container', 'stats-card', 'chart-container'],
+      'ecommerce': ['product-grid', 'cart-sidebar', 'checkout-form', 'filter-panel'],
+      'social': ['feed-container', 'post-card', 'user-profile', 'notification-bell'],
+      'portfolio': ['hero-section', 'projects-grid', 'skills-section', 'contact-form'],
+      'finder': ['search-results', 'detail-modal', 'filter-sidebar', 'pagination'],
+      'productivity': ['task-list', 'toolbar', 'workspace', 'status-indicator'],
+      'utility': ['input-controls', 'output-display', 'settings-panel'],
+      'content': ['article-grid', 'content-viewer', 'sidebar-nav', 'comment-section'],
+      'communication': ['chat-window', 'contact-list', 'message-composer']
+    };
+
+    return componentMap[appType] || ['content-area'];
+  }
+
+  mapComponentInteractions(components) {
+    return components.reduce((interactions, component) => {
+      interactions[component] = this.inferInteractions(component);
+      return interactions;
+    }, {});
+  }
 }
 
 class AdaptiveHTMLGenerator {
@@ -411,56 +480,6 @@ OUTPUT: Complete, valid HTML5 document ready for CSS styling and JavaScript func
     if (component.includes('input')) return 'input events and validation';
     if (component.includes('modal')) return 'open/close functionality';
     return 'appropriate event handlers';
-  }
-
-  mapComponents(analysis) {
-    console.log(`🗺️ [DEBUG] Mapping components for ${analysis.appType} application...`);
-
-    const baseComponents = ['header', 'navigation', 'main-content', 'footer'];
-    const featureComponents = this.mapFeaturesToComponents(analysis.features);
-    const appSpecificComponents = this.getAppSpecificComponents(analysis.appType);
-
-    const allComponents = [...baseComponents, ...featureComponents, ...appSpecificComponents];
-    const uniqueComponents = [...new Set(allComponents)];
-
-    console.log(`🗺️ [DEBUG] Component mapping complete:`, {
-      baseComponents: baseComponents.length,
-      featureComponents: featureComponents.length,
-      appSpecificComponents: appSpecificComponents.length,
-      totalUniqueComponents: uniqueComponents.length,
-      componentList: uniqueComponents
-    });
-
-    return {
-      all: uniqueComponents,
-      base: baseComponents,
-      features: featureComponents,
-      appSpecific: appSpecificComponents,
-      interactions: this.mapComponentInteractions(uniqueComponents)
-    };
-  }
-
-  getAppSpecificComponents(appType) {
-    const componentMap = {
-      'dashboard': ['sidebar', 'widget-container', 'stats-card', 'chart-container'],
-      'ecommerce': ['product-grid', 'cart-sidebar', 'checkout-form', 'filter-panel'],
-      'social': ['feed-container', 'post-card', 'user-profile', 'notification-bell'],
-      'portfolio': ['hero-section', 'projects-grid', 'skills-section', 'contact-form'],
-      'finder': ['search-results', 'detail-modal', 'filter-sidebar', 'pagination'],
-      'productivity': ['task-list', 'toolbar', 'workspace', 'status-indicator'],
-      'utility': ['input-controls', 'output-display', 'settings-panel'],
-      'content': ['article-grid', 'content-viewer', 'sidebar-nav', 'comment-section'],
-      'communication': ['chat-window', 'contact-list', 'message-composer']
-    };
-
-    return componentMap[appType] || ['content-area'];
-  }
-
-  mapComponentInteractions(components) {
-    return components.reduce((interactions, component) => {
-      interactions[component] = this.inferInteractions(component);
-      return interactions;
-    }, {});
   }
 
   async callAI(prompt, fileType = 'unknown') {
