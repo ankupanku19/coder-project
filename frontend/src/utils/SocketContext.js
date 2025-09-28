@@ -18,7 +18,7 @@ export const SocketProvider = ({ children }) => {
   const [reconnectAttempts, setReconnectAttempts] = useState(0);
 
   useEffect(() => {
-    const serverUrl = process.env.REACT_APP_SERVER_URL || 'https://coder-project-jar9.onrender.com';
+    const serverUrl = process.env.REACT_APP_SERVER_URL || 'http://localhost:5000';
 
     const socketInstance = io(serverUrl, {
       autoConnect: true,

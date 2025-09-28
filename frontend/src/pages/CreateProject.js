@@ -497,7 +497,7 @@ const CreateProject = () => {
                   onClick={() => {
                     if (currentProject) {
                       try {
-                        const serverUrl = process.env.REACT_APP_SERVER_URL || 'https://coder-project-jar9.onrender.com';
+                        const serverUrl = process.env.REACT_APP_SERVER_URL || 'http://localhost:5000';
                         const downloadUrl = `${serverUrl}/api/projects/${currentProject.id}/download`;
                         console.log('Download URL:', downloadUrl);
                         window.open(downloadUrl, '_blank');

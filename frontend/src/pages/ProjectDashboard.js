@@ -51,7 +51,7 @@ const ProjectDashboard = () => {
   };
 
   const handleDownloadProject = (projectId) => {
-    const serverUrl = process.env.REACT_APP_SERVER_URL || 'https://coder-project-jar9.onrender.com';
+    const serverUrl = process.env.REACT_APP_SERVER_URL || 'http://localhost:5000';
     window.open(`${serverUrl}/api/projects/${projectId}/download`, '_blank');
   };
 

@@ -1796,7 +1796,7 @@ app.use((err, req, res, next) => {
 });
 
 // Start server
-const PORT = process.env.PORT || 5005;
+const PORT = process.env.PORT || 5000;
 server.listen(PORT, () => {
   console.log(`🚀 AI Code Generator Backend running on port ${PORT}`);
   console.log(`📡 WebSocket server ready for real-time communication`);
