@@ -398,16 +398,16 @@ class AdaptiveHTMLGenerator {
 
   buildUniversalHTMLPrompt(architecture, analysis) {
     const idNamingRules = this.generateIDNamingRules(analysis.appType);
-    const componentRequirements = this.generateComponentRequirements(architecture.htmlStructure.components);
+    const componentRequirements = this.generateComponentRequirements(architecture.htmlStructure?.components || []);
 
     return `Create semantic HTML5 structure for a ${analysis.appType} application.
 
 APP CONTEXT:
-${analysis.appType} with features: ${analysis.features.join(', ')}
+${analysis.appType} with features: ${(analysis.features || []).join(', ')}
 
 REQUIRED STRUCTURE:
 - Header with navigation and branding
-- Main content area with ${architecture.sections.join(', ')}
+- Main content area with ${(architecture.htmlStructure?.sections || []).join(', ')}
 - Footer with links and information
 - All interactive elements for requested features
 
@@ -435,7 +435,7 @@ MODERN STANDARDS:
 CRITICAL REQUIREMENTS:
 1. Every interactive element MUST have a unique, descriptive ID
 2. Use semantic HTML consistently
-3. Include ALL requested features: ${analysis.features.join(', ')}
+3. Include ALL requested features: ${(analysis.features || []).join(', ')}
 4. Proper form structure with validation
 5. Accessibility attributes throughout
 
@@ -618,10 +618,10 @@ class IntelligentCSSGenerator {
     return `Create modern, responsive CSS that PERFECTLY matches this HTML structure:
 
 EXACT HTML ELEMENTS TO STYLE:
-IDs: ${htmlAnalysis.ids.join(', ')}
-Classes: ${htmlAnalysis.classes.join(', ')}
-Semantic Elements: ${htmlAnalysis.semanticElements.join(', ')}
-Interactive Elements: ${htmlAnalysis.interactiveElements.join(', ')}
+IDs: ${(htmlAnalysis.ids || []).join(', ')}
+Classes: ${(htmlAnalysis.classes || []).join(', ')}
+Semantic Elements: ${(htmlAnalysis.semanticElements || []).join(', ')}
+Interactive Elements: ${(htmlAnalysis.interactiveElements || []).join(', ')}
 
 DESIGN SYSTEM:
 Colors: ${JSON.stringify(designSystem.colors)}
@@ -629,7 +629,7 @@ Typography: ${JSON.stringify(designSystem.typography)}
 Layout Type: ${htmlAnalysis.structure}
 
 APP TYPE: ${analysis.appType}
-FEATURES: ${analysis.features.join(', ')}
+FEATURES: ${(analysis.features || []).join(', ')}
 
 LAYOUT STRATEGY:
 ${this.generateLayoutStrategy(htmlAnalysis.structure, analysis.appType)}
@@ -868,7 +868,7 @@ DATA STRATEGY:
 ${JSON.stringify(dataStrategy, null, 2)}
 
 REQUIRED FUNCTIONALITY:
-${analysis.features.map(feature =>
+${(analysis.features || []).map(feature =>
   `- ${feature}: Complete implementation with error handling and user feedback`
 ).join('\n')}
 
@@ -1301,7 +1301,7 @@ class UniversalWebAppGenerator {
 
       const htmlGenerator = new AdaptiveHTMLGenerator();
       console.log(`🤖 [DEBUG] AI is thinking about HTML structure...`);
-      console.log(`💭 [DEBUG] AI considerations: semantic HTML5, accessibility, ${analysis.features.join(', ')} features`);
+      console.log(`💭 [DEBUG] AI considerations: semantic HTML5, accessibility, ${(analysis.features || []).join(', ')} features`);
 
       const htmlContent = await htmlGenerator.generateHTML(architecture, analysis);
 
@@ -1328,7 +1328,7 @@ class UniversalWebAppGenerator {
       });
 
       console.log(`🤖 [DEBUG] AI is thinking about CSS design...`);
-      console.log(`💭 [DEBUG] AI considerations: ${analysis.appType} design patterns, responsive layout, ${analysis.designRequirements.join(', ')} aesthetic`);
+      console.log(`💭 [DEBUG] AI considerations: ${analysis.appType} design patterns, responsive layout, ${(analysis.designRequirements || []).join(', ')} aesthetic`);
 
       const cssContent = await cssGenerator.generateCSS(htmlContent, analysis);
 
@@ -1354,7 +1354,7 @@ class UniversalWebAppGenerator {
       });
 
       console.log(`🤖 [DEBUG] AI is thinking about JavaScript functionality...`);
-      console.log(`💭 [DEBUG] AI considerations: modern ES6+, ${analysis.features.join(', ')} features, error handling, performance`);
+      console.log(`💭 [DEBUG] AI considerations: modern ES6+, ${(analysis.features || []).join(', ')} features, error handling, performance`);
 
       const jsContent = await jsGenerator.generateJS(htmlContent, analysis);
 
@@ -1451,7 +1451,7 @@ A modern, responsive ${analysis.appType} application built with HTML5, CSS3, and
 
 ## 🌟 Features
 
-${analysis.features.map(feature => `- **${this.capitalize(feature)}**: Advanced ${feature} functionality`).join('\n')}
+${(analysis.features || []).map(feature => `- **${this.capitalize(feature)}**: Advanced ${feature} functionality`).join('\n')}
 
 ## 🚀 Quick Start
 
@@ -1476,11 +1476,11 @@ This application is specifically designed for ${analysis.appType} use cases with
 - **HTML5**: Semantic structure with accessibility
 - **CSS3**: Modern styling with Grid and Flexbox
 - **JavaScript**: ES6+ with modular architecture
-- **Design**: ${analysis.designRequirements.join(', ')} aesthetic
+- **Design**: ${(analysis.designRequirements || []).join(', ')} aesthetic
 
 ## 📋 Features Details
 
-${analysis.features.map(feature => `### ${this.capitalize(feature)}
+${(analysis.features || []).map(feature => `### ${this.capitalize(feature)}
 Complete ${feature} implementation with modern UX patterns.`).join('\n\n')}
 
 ## 🌐 Browser Support
