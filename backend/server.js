@@ -398,7 +398,7 @@ class AdaptiveHTMLGenerator {
 
   buildUniversalHTMLPrompt(architecture, analysis) {
     const idNamingRules = this.generateIDNamingRules(analysis.appType);
-    const componentRequirements = this.generateComponentRequirements(architecture.components);
+    const componentRequirements = this.generateComponentRequirements(architecture.htmlStructure.components);
 
     return `Create semantic HTML5 structure for a ${analysis.appType} application.
 
